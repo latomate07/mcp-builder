@@ -1,0 +1,16 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.162",
+    "aws-lambda": "^1.0.7",
+    "typescript": "^7.0.2"
+  }
+}

@@ -2,3 +2,15 @@ node_modules/
 dist/
 .env
 .next/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+
+# Terraform plan files
+*.tfplan
