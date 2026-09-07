@@ -2,6 +2,7 @@ node_modules/
 dist/
 .env
 .next/
+data/
 
 # Terraform
 .terraform/
