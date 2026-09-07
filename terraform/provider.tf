@@ -18,11 +18,11 @@ provider "aws" {
   s3_use_path_style           = true
 
   endpoints {
-    dynamodb       = "http://localhost:4566"
-    secretsmanager = "http://localhost:4566"
-    s3             = "http://localhost:4566"
-    sns            = "http://localhost:4566"
-    sqs            = "http://localhost:4566"
-    ssm            = "http://localhost:4566"
+    dynamodb       = "http://localhost.floci.io:4566"
+    secretsmanager = "http://localhost.floci.io:4566"
+    s3             = "http://localhost.floci.io:4566"
+    sns            = "http://localhost.floci.io:4566"
+    sqs            = "http://localhost.floci.io:4566"
+    ssm            = "http://localhost.floci.io:4566"
   }
 }
