@@ -17,6 +17,8 @@ module "network" {
 
 module "compute" {
   source = "./modules/compute"
+
+  aws_region = var.aws_region
 }
 
 module "database" {

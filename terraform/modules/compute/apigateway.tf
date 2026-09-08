@@ -28,6 +28,9 @@ resource "aws_apigatewayv2_route" "hello_world" {
   api_id    = aws_apigatewayv2_api.http_api.id
   route_key = "GET /hello"
   target    = "integrations/${aws_apigatewayv2_integration.integration_hello_world.id}"
+
+  authorization_type = "JWT"
+  authorizer_id       = aws_apigatewayv2_authorizer.control_panel_authorizer.id
 }
 
 resource "aws_lambda_permission" "apigw_hello_world" {
