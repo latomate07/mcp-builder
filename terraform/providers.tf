@@ -12,6 +12,7 @@ provider "aws" {
     apigatewayv2   = var.floci_endpoint
     cognitoidp     = var.floci_endpoint
     dynamodb       = var.floci_endpoint
+    ec2            = var.floci_endpoint
     iam            = var.floci_endpoint
     lambda         = var.floci_endpoint
     secretsmanager = var.floci_endpoint
