@@ -1,24 +1,15 @@
-resource "aws_s3_bucket" "app" {
-  bucket = "floci-terraform-example"
+module "network" {
+  source = "./modules/network"
 }
 
-resource "aws_sqs_queue" "jobs" {
-  name = "floci-terraform-jobs"
+module "compute" {
+  source = "./modules/compute"
 }
 
-resource "aws_dynamodb_table" "items" {
-  name         = "floci-terraform-items"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "id"
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
+module "database" {
+  source = "./modules/database"
 }
 
-resource "aws_ssm_parameter" "environment" {
-  name  = "/floci/environment"
-  type  = "String"
-  value = "local"
+module "monitoring" {
+  source = "./modules/monitoring"
 }

@@ -10,9 +10,27 @@ repository. It has two goals at once, on purpose:
 
 It should be read together with [`terraform/README.md`](../terraform/README.md) (local iteration
 against `floci`, the LocalStack-style AWS emulator already wired into
-[`docker-compose.yml`](../docker-compose.yml)) and the root [`README.md`](../README.md).
+[`docker-compose.yml`](../docker-compose.yml)), the root [`README.md`](../README.md), and
+[`docs/roadmap.md`](./roadmap.md) for the concrete, sequenced build order.
 
 ---
+
+> **Update — 2026-09-07: control plane pivots to fully serverless.**
+> Sections 3, 4 and 6 below originally put the control plane on ECS Fargate + ALB + Aurora inside
+> the VPC. Decision: the control plane moves to **API Gateway (HTTP API) + Lambda + Cognito (JWT
+> authorizer) + DynamoDB** instead — no ECS, no ALB, no Aurora, no VPC required for it. Reasons:
+> it matches the "serverless end-to-end" goal, `floci` emulates Cognito/API Gateway/Lambda/DynamoDB
+> in one lightweight container so the whole backend is testable locally with zero AWS cost, and
+> `apps/web` (already built, mocked) can call API Gateway endpoints directly with a Cognito-issued
+> JWT — no separate backend session layer needed.
+>
+> The VPC design in §4 is **not abandoned**, it's **decoupled from the critical path**: it becomes
+> its own practice track (e.g. a future "bring your own private DB" feature using Aurora in a real
+> VPC, or simply built standalone for the networking practice value). See
+> [`docs/roadmap.md`](./roadmap.md) for how the two tracks are sequenced.
+>
+> Read §3/§4/§6 below as "the fully-managed-network-heavy alternative" for reference and for the
+> VPC practice track — the actual build order now follows the roadmap.
 
 ## 1. What we're actually hosting
 
