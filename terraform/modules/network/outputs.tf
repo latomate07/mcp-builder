@@ -1,11 +1,11 @@
-output "dev_vpc_id" {
-  value = aws_vpc.dev.id
+output "vpc_id" {
+  value = aws_vpc.this.id
 }
 
-output "staging_vpc_id" {
-  value = aws_vpc.staging.id
+output "public_subnet_id" {
+  value = aws_subnet.public.id
 }
 
-output "prod_vpc_id" {
-  value = aws_vpc.prod.id
+output "private_subnet_id" {
+  value = aws_subnet.private.id
 }
