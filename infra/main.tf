@@ -19,6 +19,7 @@ module "compute" {
   source = "./modules/compute"
 
   aws_region = var.aws_region
+  floci_endpoint_without_scheme = var.floci_endpoint_without_scheme
 }
 
 module "database" {

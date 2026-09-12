@@ -9,3 +9,9 @@ variable "floci_endpoint" {
   type        = string
   default     = "http://localhost.floci.io:4566"
 }
+
+variable "floci_endpoint_without_scheme" {
+  description = "Floci endpoint for local aws provider"
+  type        = string
+  default     = "localhost.floci.io:4566"
+}

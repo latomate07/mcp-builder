@@ -4,6 +4,11 @@ variable "lambda_runtime" {
   default     = "python3.12"
 }
 
+variable "floci_endpoint_without_scheme" {
+  description = "Floci endpoint for local aws provider"
+  type        = string
+}
+
 variable "aws_region" {
   description = "Région AWS utilisée pour construire l'issuer JWT du User Pool Cognito"
   type        = string

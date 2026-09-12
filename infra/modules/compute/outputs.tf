@@ -1,6 +1,7 @@
 output "api_endpoint" {
   description = "URL d'invocation de la stage HTTP API"
-  value       = aws_apigatewayv2_stage.http_api_stage.invoke_url
+  # TODO: change it on real aws endpoint when using real AWS provider
+  value = "http://${aws_apigatewayv2_api.http_api.id}.execute-api.${var.floci_endpoint_without_scheme}/${aws_apigatewayv2_stage.http_api_stage.name}"
 }
 
 output "api_gateway_stage" {
