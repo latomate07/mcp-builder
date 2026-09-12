@@ -21,5 +21,6 @@ provider "aws" {
     sqs            = var.floci_endpoint
     ssm            = var.floci_endpoint
     sts            = var.floci_endpoint
+    cloudwatchlogs = var.floci_endpoint
   }
 }
