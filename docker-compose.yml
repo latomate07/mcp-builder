@@ -8,7 +8,7 @@ services:
       - PORT=3000
 
   floci:
-    image: floci/floci:latest
+    image: floci/floci:latest-compat
     container_name: floci
     ports:
       - "4566:4566"
