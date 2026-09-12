@@ -1,5 +1,8 @@
-def handle(event, context):
+import json
+
+def handler(event, context):
+    message = f'Hello, World! You sent this request: {json.dumps(event)}.'
     return {
         "statusCode": 200,
-        "body": f'Hello, World! You sent this request: {event}.'
+        "body": json.dumps({"message": message})
     }

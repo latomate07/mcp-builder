@@ -34,6 +34,6 @@ resource "aws_apigatewayv2_authorizer" "control_panel_authorizer" {
 
   jwt_configuration {
     audience = [aws_cognito_user_pool_client.control_panel_client.id]
-    issuer   = "https://cognito-idp.${var.aws_region}.amazonaws.com/${aws_cognito_user_pool.control_panel_user_pool.id}"
+    issuer   = "${var.floci_endpoint}/${aws_cognito_user_pool.control_panel_user_pool.id}"
   }
 }
