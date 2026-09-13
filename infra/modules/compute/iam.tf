@@ -11,6 +11,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "hello_world" {
-  name               = "lambda_execution_role"
+  name               = "lambda_execution_role-${var.infra_environment}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  tags               = local.common_tags
 }

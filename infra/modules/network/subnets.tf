@@ -3,7 +3,7 @@ resource "aws_subnet" "public" {
   cidr_block = cidrsubnet(var.vpc_cidr, 8, 1)
 
   tags = {
-    Name = "${var.environment} Public Subnet"
+    Name = "${var.infra_environment} Public Subnet"
   }
 }
 
@@ -12,6 +12,6 @@ resource "aws_subnet" "private" {
   cidr_block = cidrsubnet(var.vpc_cidr, 8, 2)
 
   tags = {
-    Name = "${var.environment} Private Subnet"
+    Name = "${var.infra_environment} Private Subnet"
   }
 }

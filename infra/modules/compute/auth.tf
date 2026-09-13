@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool" "control_panel_user_pool" {
-  name = "control-panel-user-pool"
+  name = "control-panel-user-pool-${var.infra_environment}"
   password_policy {
     minimum_length    = 8
     require_lowercase = true
@@ -7,6 +7,8 @@ resource "aws_cognito_user_pool" "control_panel_user_pool" {
     require_symbols   = true
     require_uppercase = true
   }
+
+  tags = local.common_tags
 }
 
 resource "aws_cognito_user" "admin_user" {
@@ -15,7 +17,7 @@ resource "aws_cognito_user" "admin_user" {
 }
 
 resource "aws_cognito_user_pool_client" "control_panel_client" {
-  name         = "control-panel-client"
+  name         = "control-panel-client-${var.infra_environment}"
   user_pool_id = aws_cognito_user_pool.control_panel_user_pool.id
 
   generate_secret = false
@@ -34,6 +36,7 @@ resource "aws_apigatewayv2_authorizer" "control_panel_authorizer" {
 
   jwt_configuration {
     audience = [aws_cognito_user_pool_client.control_panel_client.id]
-    issuer   = "${var.floci_endpoint}/${aws_cognito_user_pool.control_panel_user_pool.id}"
+    # Floci issuer locally, real regional Cognito endpoint on a real AWS account.
+    issuer = local.is_local_emulator ? "${var.floci_endpoint}/${aws_cognito_user_pool.control_panel_user_pool.id}" : "https://cognito-idp.${var.aws_region}.amazonaws.com/${aws_cognito_user_pool.control_panel_user_pool.id}"
   }
 }

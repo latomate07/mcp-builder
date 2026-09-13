@@ -1,25 +1,24 @@
 output "api_endpoint" {
-  description = "URL d'invocation de la stage HTTP API"
-  # TODO: change it on real aws endpoint when using real AWS provider
-  value = "http://${aws_apigatewayv2_api.http_api.id}.execute-api.${var.floci_endpoint_without_scheme}/${aws_apigatewayv2_stage.http_api_stage.name}"
+  description = "HTTP API invoke URL"
+  value       = local.is_local_emulator ? "http://${aws_apigatewayv2_api.http_api.id}.execute-api.${var.floci_endpoint_without_scheme}/${aws_apigatewayv2_stage.http_api_stage.name}" : aws_apigatewayv2_stage.http_api_stage.invoke_url
 }
 
 output "api_gateway_stage" {
-  description = "Nom de la stage déployée"
+  description = "Deployed stage name"
   value       = aws_apigatewayv2_stage.http_api_stage.name
 }
 
 output "hello_world_function_name" {
-  description = "Nom de la fonction Lambda hello_world"
+  description = "hello_world Lambda function name"
   value       = aws_lambda_function.hello_world.function_name
 }
 
 output "cognito_user_pool_id" {
-  description = "ID du User Pool Cognito du control panel"
+  description = "Control panel Cognito User Pool ID"
   value       = aws_cognito_user_pool.control_panel_user_pool.id
 }
 
 output "cognito_app_client_id" {
-  description = "ID du client applicatif utilisé pour obtenir un JWT (ex: via aws cognito-idp initiate-auth)"
+  description = "App client ID used to obtain a JWT (e.g. via aws cognito-idp initiate-auth)"
   value       = aws_cognito_user_pool_client.control_panel_client.id
 }

@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "http_api" {
-  name          = "backend-api"
+  name          = "backend-api-${var.infra_environment}"
   description   = "Control Plane API for the backend"
   protocol_type = "HTTP"
 
@@ -8,6 +8,8 @@ resource "aws_apigatewayv2_api" "http_api" {
     allow_methods = ["*"]
     allow_origins = ["*"]
   }
+
+  tags = local.common_tags
 }
 
 resource "aws_apigatewayv2_stage" "http_api_stage" {
@@ -17,18 +19,18 @@ resource "aws_apigatewayv2_stage" "http_api_stage" {
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api_gateway_logs.arn
-    
-    format          = jsonencode({
-      requestId       = "$context.requestId"
-      ip              = "$context.identity.sourceIp"
-      caller          = "$context.identity.caller"
-      user            = "$context.identity.user"
-      requestTime     = "$context.requestTime"
-      httpMethod      = "$context.httpMethod"
-      resourcePath    = "$context.resourcePath"
-      status          = "$context.status"
-      protocol        = "$context.protocol"
-      responseLength  = "$context.responseLength"
+
+    format = jsonencode({
+      requestId      = "$context.requestId"
+      ip             = "$context.identity.sourceIp"
+      caller         = "$context.identity.caller"
+      user           = "$context.identity.user"
+      requestTime    = "$context.requestTime"
+      httpMethod     = "$context.httpMethod"
+      resourcePath   = "$context.resourcePath"
+      status         = "$context.status"
+      protocol       = "$context.protocol"
+      responseLength = "$context.responseLength"
     })
   }
 }
@@ -47,7 +49,7 @@ resource "aws_apigatewayv2_route" "hello_world" {
   target    = "integrations/${aws_apigatewayv2_integration.integration_hello_world.id}"
 
   authorization_type = "JWT"
-  authorizer_id       = aws_apigatewayv2_authorizer.control_panel_authorizer.id
+  authorizer_id      = aws_apigatewayv2_authorizer.control_panel_authorizer.id
 }
 
 resource "aws_lambda_permission" "apigw_hello_world" {
