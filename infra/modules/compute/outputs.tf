@@ -22,3 +22,8 @@ output "cognito_app_client_id" {
   description = "App client ID used to obtain a JWT (e.g. via aws cognito-idp initiate-auth)"
   value       = aws_cognito_user_pool_client.control_panel_client.id
 }
+
+output "fargate_sg_id" {
+  description = "Security group ID for the Fargate service that needs to access the database."
+  value       = aws_security_group.fargate_sg.id
+}

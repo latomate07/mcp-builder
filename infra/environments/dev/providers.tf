@@ -1,7 +1,3 @@
-# infra_environment "dev" runs on Floci (local AWS emulator), not a real
-# account. Independent of mcp_environment: this can run with
-# mcp_environment = "live" (e.g. end-to-end test against the real
-# third-party API) without changing anything here.
 provider "aws" {
   region     = var.aws_region
   access_key = "test"
@@ -26,5 +22,6 @@ provider "aws" {
     ssm            = var.floci_endpoint
     sts            = var.floci_endpoint
     cloudwatchlogs = var.floci_endpoint
+    rds            = var.floci_endpoint
   }
 }

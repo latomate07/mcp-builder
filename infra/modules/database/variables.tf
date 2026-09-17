@@ -1,13 +1,16 @@
-variable "lambda_runtime" {
-  description = "Lambda runtime used by the backend's Python functions"
+variable "vpc_id" {
+  description = "VPC ID for the backend's Lambda functions."
   type        = string
-  default     = "python3.12"
 }
 
-variable "floci_endpoint_without_scheme" {
-  description = "Floci endpoint for local aws provider. Leave null outside of dev (real AWS)."
+variable "vpc_cidr" {
+  description = "VPC CIDR for the backend's Lambda functions."
   type        = string
-  default     = null
+}
+
+variable "vpc_subnet_ids" {
+  description = "List of subnet IDs for the backend's Lambda functions."
+  type        = list(string)
 }
 
 variable "floci_endpoint" {
@@ -41,22 +44,7 @@ variable "mcp_environment" {
   }
 }
 
-variable "lambda_source_file" {
-  description = "Path (relative to the calling environment's path.root) to the hello_world Lambda source file. Injected by the caller instead of computed here, so it doesn't depend on the root module's depth."
-  type        = string
-}
-
-variable "lambda_build_output_path" {
-  description = "Path (relative to the calling environment's path.root) where the built hello_world Lambda zip is written."
-  type        = string
-}
-
-variable "database_sg_id" {
-  description = "Security group ID for the database that needs to be accessed by the Fargate service."
-  type        = string
-}
-
-variable "vpc_id" {
-  description = "VPC ID for the backend's Lambda functions."
+variable "fargate_sg_id" {
+  description = "Security group ID for the Fargate service that needs to access the database."
   type        = string
 }
