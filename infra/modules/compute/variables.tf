@@ -4,6 +4,12 @@ variable "lambda_runtime" {
   default     = "python3.12"
 }
 
+variable "lambda_architecture" {
+  description = "CPU architecture for Lambda functions and their native dependencies. Floci runs Lambda containers matching the host machine's architecture rather than the declared one, so on Apple Silicon this must be arm64 to avoid a manylinux x86_64/arm64 mismatch on compiled deps like pydantic-core."
+  type        = string
+  default     = "arm64"
+}
+
 variable "floci_endpoint_without_scheme" {
   description = "Floci endpoint for local aws provider. Leave null outside of dev (real AWS)."
   type        = string
@@ -42,12 +48,12 @@ variable "mcp_environment" {
 }
 
 variable "lambda_source_file" {
-  description = "Path (relative to the calling environment's path.root) to the hello_world Lambda source file. Injected by the caller instead of computed here, so it doesn't depend on the root module's depth."
+  description = "Path (relative to the calling environment's path.root) to the backend's src/ directory, containing functions/, services/ and validations/."
   type        = string
 }
 
 variable "lambda_build_output_path" {
-  description = "Path (relative to the calling environment's path.root) where the built hello_world Lambda zip is written."
+  description = "Path (relative to the calling environment's path.root) where built Lambda zips and their staging directories are written."
   type        = string
 }
 

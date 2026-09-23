@@ -1,0 +1,20 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "MCP Builder backend serverless apis"
+readme = "README.md"
+authors = [
+    { name = "Tahirou Magagi", email = "65642962+latomate07@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "boto3>=1.43.101",
+    "pydantic>=2.13.5",
+]
+
+[project.scripts]
+backend = "backend:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"

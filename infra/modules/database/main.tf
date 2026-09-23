@@ -4,15 +4,15 @@ resource "aws_db_parameter_group" "mcpbuilder_pg" {
 }
 
 resource "aws_db_instance" "mcpbuilder_database" {
-  allocated_storage    = 10
-  db_name              = "mcpbuilder_database_${var.infra_environment}"
-  engine               = "mysql"
-  engine_version       = "8.0"
-  instance_class       = "db.t3.micro"
-  username             = "foo"
-  password             = "foobarbaz"
-  parameter_group_name = aws_db_parameter_group.mcpbuilder_pg.name
-  skip_final_snapshot  = true
+  allocated_storage      = 10
+  db_name                = "mcpbuilder_database_${var.infra_environment}"
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  username               = "foo"
+  password               = "foobarbaz"
+  parameter_group_name   = aws_db_parameter_group.mcpbuilder_pg.name
+  skip_final_snapshot    = true
   multi_az               = false
   vpc_security_group_ids = [aws_security_group.database_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.mcpbuilder_subnet_group.name

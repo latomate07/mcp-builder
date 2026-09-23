@@ -1,11 +1,11 @@
 output "api_endpoint" {
   description = "HTTP API invoke URL"
-  value       = local.is_local_emulator ? "http://${aws_apigatewayv2_api.http_api.id}.execute-api.${var.floci_endpoint_without_scheme}/${aws_apigatewayv2_stage.http_api_stage.name}" : aws_apigatewayv2_stage.http_api_stage.invoke_url
+  value       = local.is_local_emulator ? "http://${aws_apigatewayv2_api.http_api.id}.execute-api.${var.floci_endpoint_without_scheme}/${aws_apigatewayv2_stage.api.name}" : aws_apigatewayv2_stage.api.invoke_url
 }
 
 output "api_gateway_stage" {
   description = "Deployed stage name"
-  value       = aws_apigatewayv2_stage.http_api_stage.name
+  value       = aws_apigatewayv2_stage.api.name
 }
 
 output "hello_world_function_name" {
@@ -21,6 +21,11 @@ output "cognito_user_pool_id" {
 output "cognito_app_client_id" {
   description = "App client ID used to obtain a JWT (e.g. via aws cognito-idp initiate-auth)"
   value       = aws_cognito_user_pool_client.control_panel_client.id
+}
+
+output "cognito_app_client_secret" {
+  description = "App client secret used to obtain a JWT (e.g. via aws cognito-idp initiate-auth)"
+  value       = aws_cognito_user_pool_client.control_panel_client.client_secret
 }
 
 output "fargate_sg_id" {

@@ -14,12 +14,12 @@ module "compute" {
 
   infra_environment = "dev"
   mcp_environment   = var.mcp_environment
-  vpc_id                    = module.network.vpc_id
+  vpc_id            = module.network.vpc_id
 
-  database_sg_id    = module.database.database_sg_id
+  database_sg_id = module.database.database_sg_id
 
-  lambda_source_file       = "../../../apps/backend/src/functions/hello_world/index.py"
-  lambda_build_output_path = "build/lambda/function.zip"
+  lambda_source_file       = "../../../apps/backend/src"
+  lambda_build_output_path = "build/lambda"
 }
 
 module "database" {
@@ -30,11 +30,11 @@ module "database" {
   infra_environment = "dev"
   mcp_environment   = var.mcp_environment
 
-  fargate_sg_id     = module.compute.fargate_sg_id
+  fargate_sg_id = module.compute.fargate_sg_id
 
-  vpc_id                    = module.network.vpc_id
-  vpc_cidr                  = module.network.vpc_cidr
-  vpc_subnet_ids            = [module.network.public_subnet_id, module.network.private_subnet_id]
+  vpc_id         = module.network.vpc_id
+  vpc_cidr       = module.network.vpc_cidr
+  vpc_subnet_ids = [module.network.public_subnet_id, module.network.private_subnet_id]
 }
 
 module "storage" {
