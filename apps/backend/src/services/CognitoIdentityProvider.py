@@ -67,7 +67,10 @@ class CognitoIdentityProvider:
 
             response = self.cognito_idp_client.sign_up(**kwargs)
 
-            if self.auto_confirm_user:
+            if self.auto_confirm_user and not response["UserConfirmed"]:
+                self.cognito_idp_client.admin_confirm_sign_up(
+                    UserPoolId=self.user_pool_id, Username=user_name
+                )
                 response["UserConfirmed"] = True
 
             confirmed = response["UserConfirmed"]
