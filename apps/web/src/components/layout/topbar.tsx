@@ -14,8 +14,11 @@ import {
   ExternalLink,
   ChevronDown,
   Check,
+  Settings,
+  LogOut,
 } from "lucide-react";
 import { useMcp } from "@/context/mcp-context";
+import { useAuth } from "@/context/auth-context";
 import { SearchModal } from "@/components/ui/search-modal";
 import {
   DropdownMenu,
@@ -30,6 +33,7 @@ export function Topbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { account, activeServer, servers, setActiveServerId } = useMcp();
+  const { user } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
@@ -138,6 +142,43 @@ export function Topbar() {
             <Plus className="h-3.5 w-3.5" />
             <span>Nouveau</span>
           </button>
+
+          {/* User menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center justify-center h-7 w-7 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[11px] font-semibold text-emerald-300 hover:border-emerald-500/60 transition-colors focus:outline-none"
+                title={user?.email || account.email}
+              >
+                {(user?.name || account.name).slice(0, 1).toUpperCase()}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-[#171717] border-[#2e2e2e] shadow-2xl p-1">
+              <DropdownMenuLabel className="text-xs font-medium text-zinc-200 normal-case tracking-normal">
+                {user?.name || account.name}
+                <div className="text-[11px] font-normal text-zinc-500 truncate">
+                  {user?.email || account.email}
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-[#232323]" />
+              <DropdownMenuItem
+                onClick={() => router.push("/settings")}
+                className="flex items-center gap-2 text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-md cursor-pointer"
+              >
+                <Settings className="h-3.5 w-3.5" />
+                <span>Paramètres</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-[#232323]" />
+              <DropdownMenuItem
+                onClick={() => router.push("/logout")}
+                className="flex items-center gap-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md cursor-pointer"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                <span>Se déconnecter</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 

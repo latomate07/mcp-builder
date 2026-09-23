@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { McpProvider } from "@/context/mcp-context";
+import { AuthProvider } from "@/context/auth-context";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -23,10 +24,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <McpProvider>
-            {children}
-            <Toaster position="bottom-right" richColors closeButton />
-          </McpProvider>
+          <AuthProvider>
+            <McpProvider>
+              {children}
+              <Toaster position="bottom-right" richColors closeButton />
+            </McpProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

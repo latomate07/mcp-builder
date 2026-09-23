@@ -1,11 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { SidebarRail } from "@/components/layout/sidebar-rail";
 import { SubSidebar } from "@/components/layout/sub-sidebar";
 import { Topbar } from "@/components/layout/topbar";
+import { useAuth } from "@/context/auth-context";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoaded } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && !isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isLoaded, isAuthenticated, router]);
+
+  if (!isLoaded || !isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0c0c0c]">
+        <div className="h-5 w-5 rounded-full border-2 border-zinc-700 border-t-emerald-400 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex bg-[#0c0c0c] text-zinc-100 antialiased font-sans">
       {/* 1. Far left Icon Rail (50px) */}
