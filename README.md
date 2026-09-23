@@ -52,6 +52,7 @@ docs/                # Architecture & design docs
 ## Tech stack
 
 - **Frontend**: Next.js 15, React 19, Tailwind CSS, Radix UI
+- **Backend**: Python (Serverless usage)
 - **Infrastructure**: AWS (Lambda, DynamoDB, S3, SQS, API Gateway, VPC, ECS Fargate, CloudFront),
   provisioned with Terraform
 - **Local AWS emulation**: [`floci`](https://github.com/floci) — a LocalStack-style emulator, so you

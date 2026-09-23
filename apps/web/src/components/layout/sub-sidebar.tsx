@@ -130,7 +130,7 @@ export function SubSidebar() {
 
       {/* Bottom info */}
       <div className="pt-4 border-t border-[#232323] px-2 text-[10px] text-zinc-500 flex items-center justify-between font-mono">
-        <span>v1.2.0 • Fargate</span>
+        <span>v1.0.0 • MCPBuilder</span>
         <span className="text-emerald-400">healthy</span>
       </div>
     </aside>

@@ -173,32 +173,6 @@ export default function SettingsPage() {
             ))}
           </div>
         </div>
-
-        {/* Section 3: Quotas & Facturation */}
-        <div className="rounded-xl border border-[#262626] bg-[#171717] p-5 space-y-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-sm font-semibold text-white">Quotas & Forfait</h2>
-              <div className="text-xs text-emerald-400 font-mono mt-0.5">{account.plan}</div>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] text-zinc-500 uppercase">Solde Prépayé</span>
-              <div className="text-lg font-bold font-mono text-white">${account.creditsBalance.toFixed(2)}</div>
-            </div>
-          </div>
-
-          <div className="w-full h-1.5 rounded-full bg-[#232323] overflow-hidden">
-            <div
-              className="h-full bg-[#3ECF8E] rounded-full"
-              style={{ width: `${(account.monthlySpend / account.spendLimit) * 100}%` }}
-            />
-          </div>
-
-          <div className="flex justify-between text-xs text-zinc-400 pt-1">
-            <span>Dépenses ce mois-ci : ${account.monthlySpend.toFixed(2)}</span>
-            <span>Limite : ${account.spendLimit.toFixed(2)}</span>
-          </div>
-        </div>
       </div>
     </AppLayout>
   );
