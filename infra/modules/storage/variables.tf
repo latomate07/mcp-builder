@@ -17,3 +17,9 @@ variable "mcp_environment" {
     error_message = "mcp_environment must be 'sandbox' or 'live'."
   }
 }
+
+variable "floci_endpoint" {
+  description = "Floci endpoint (with scheme) used to build the Cognito User Pool JWT issuer. Leave null outside of dev (real AWS)."
+  type        = string
+  default     = null
+}

@@ -23,5 +23,6 @@ provider "aws" {
     sts            = var.floci_endpoint
     cloudwatchlogs = var.floci_endpoint
     rds            = var.floci_endpoint
+    ecs            = var.floci_endpoint
   }
 }

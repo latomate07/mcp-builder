@@ -36,3 +36,11 @@ module "database" {
   vpc_cidr                  = module.network.vpc_cidr
   vpc_subnet_ids            = [module.network.public_subnet_id, module.network.private_subnet_id]
 }
+
+module "storage" {
+  source = "../../modules/storage"
+
+  floci_endpoint    = var.floci_endpoint
+  infra_environment = "dev"
+  mcp_environment   = var.mcp_environment
+}
