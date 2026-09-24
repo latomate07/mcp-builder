@@ -35,55 +35,36 @@ resource "aws_apigatewayv2_stage" "api" {
   }
 }
 
-# Integration with Auth Lambda function
-resource "aws_apigatewayv2_integration" "integration_auth_lambda" {
-  api_id                 = aws_apigatewayv2_api.http_api.id
+resource "aws_apigatewayv2_integration" "lambda" {
+  for_each = local.api_routes
+
+  api_id = aws_apigatewayv2_api.http_api.id
+
   integration_type       = "AWS_PROXY"
-  integration_uri        = aws_lambda_function.auth_lambda.invoke_arn
+  integration_uri        = each.value.lambda.invoke_arn
   integration_method     = "POST"
   payload_format_version = "2.0"
 }
 
-resource "aws_apigatewayv2_route" "auth_lambda" {
-  api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "POST /auth"
-  target    = "integrations/${aws_apigatewayv2_integration.integration_auth_lambda.id}"
+resource "aws_apigatewayv2_route" "lambda" {
+  for_each = local.api_routes
+
+  api_id = aws_apigatewayv2_api.http_api.id
+
+  route_key = "${each.value.method} ${each.value.path}"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda[each.key].id}"
 
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.control_panel_authorizer.id
 }
 
-resource "aws_lambda_permission" "apigw_auth_lambda" {
-  statement_id  = "AllowAPIGatewayInvoke"
+resource "aws_lambda_permission" "apigw" {
+  for_each = local.api_routes
+
+  statement_id  = "AllowAPIGatewayInvoke-${each.key}"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.auth_lambda.function_name
+  function_name = each.value.lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*"
-}
 
-
-# Integration with Hello World Lambda function
-resource "aws_apigatewayv2_integration" "integration_hello_world" {
-  api_id                 = aws_apigatewayv2_api.http_api.id
-  integration_type       = "AWS_PROXY"
-  integration_uri        = aws_lambda_function.hello_world.invoke_arn
-  integration_method     = "POST"
-  payload_format_version = "2.0"
-}
-
-resource "aws_apigatewayv2_route" "hello_world" {
-  api_id    = aws_apigatewayv2_api.http_api.id
-  route_key = "GET /hello"
-  target    = "integrations/${aws_apigatewayv2_integration.integration_hello_world.id}"
-
-  authorization_type = "JWT"
-  authorizer_id      = aws_apigatewayv2_authorizer.control_panel_authorizer.id
-}
-
-resource "aws_lambda_permission" "apigw_hello_world" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.hello_world.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*"
+  source_arn = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*"
 }
