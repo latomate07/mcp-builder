@@ -21,9 +21,15 @@ locals {
     }
 
     mcp_create = {
-      path   = "/mcp/create"
+      path   = "/mcp"
       method = "POST"
       lambda = aws_lambda_function.mcp_create_lambda
+    }
+
+    mcp_read = {
+      path   = "/mcp/{mcpId}"
+      method = "GET"
+      lambda = aws_lambda_function.mcp_read_lambda
     }
   }
 }

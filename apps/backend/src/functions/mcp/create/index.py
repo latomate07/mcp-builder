@@ -36,5 +36,5 @@ def handler(event, context):
 
     return {
         "statusCode": 200,
-        "body": "MCP function executed successfully."
+        "body": json.dumps({"message": f"MCP {newMcp.name} created successfully"}),
     }

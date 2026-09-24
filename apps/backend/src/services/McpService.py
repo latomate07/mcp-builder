@@ -5,6 +5,10 @@ class McpService:
     def __init__(self, dynamodb_client):
         self.db_client = dynamodb_client
 
+    def get_all_mcps(self):
+        response = self.db_client.scan(TableName="mcps_table")
+        return response.get("Items", [])
+
     def get_mcp_by_id(self, mcp_id):
         response = self.db_client.get_item(
             TableName="mcps_table",
