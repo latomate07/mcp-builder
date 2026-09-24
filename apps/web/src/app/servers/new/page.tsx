@@ -286,20 +286,7 @@ export default function NewServerWizardPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-zinc-300">Région AWS</label>
-                  <select
-                    value={region}
-                    onChange={(e) => setRegion(e.target.value)}
-                    className="w-full h-9 px-2.5 rounded-md border border-[#2e2e2e] bg-[#121212] text-xs text-white focus:outline-none focus:border-zinc-500"
-                  >
-                    <option value="eu-west-3 (Paris)">eu-west-3 (Paris)</option>
-                    <option value="us-east-1 (N. Virginia)">us-east-1 (N. Virginia)</option>
-                    <option value="eu-west-1 (Ireland)">eu-west-1 (Ireland)</option>
-                  </select>
-                </div>
-
+              <div className="grid grid-cols-1 gap-3">
                 <div className="space-y-1">
                   <label className="text-xs font-medium text-zinc-300">Runtime</label>
                   <select
@@ -307,13 +294,13 @@ export default function NewServerWizardPage() {
                     onChange={(e) => setRuntime(e.target.value as any)}
                     className="w-full h-9 px-2.5 rounded-md border border-[#2e2e2e] bg-[#121212] text-xs text-white focus:outline-none focus:border-zinc-500"
                   >
-                    <option value="Node.js 20">Node.js 20 (SSE & Fast HTTP)</option>
-                    <option value="Python 3.11">Python 3.11 (Data & DB)</option>
+                    <option value="nodejs20">Node.js 20 (SSE & Fast HTTP)</option>
+                    <option value="python311">Python 3.11 (Data & DB)</option>
                   </select>
                 </div>
               </div>
             </div>
-
+   
             <div className="pt-4 border-t border-[#262626] flex justify-between">
               <button
                 type="button"

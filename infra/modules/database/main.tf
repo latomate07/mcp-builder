@@ -31,10 +31,10 @@ resource "aws_dynamodb_table" "mcps_table" {
   name           = "mcps_${var.infra_environment}"
   billing_mode   = "PAY_PER_REQUEST"
 
-  hash_key       = "id"
+  hash_key       = "Id"
 
   attribute {
-    name = "id"
+    name = "Id"
     type = "S"
   }
 
@@ -45,10 +45,10 @@ resource "aws_dynamodb_table" "mcps_tools_table" {
   name           = "mcps_${var.infra_environment}"
   billing_mode   = "PAY_PER_REQUEST"
 
-  hash_key       = "mcp_id"
+  hash_key       = "Id"
 
   attribute {
-    name = "mcp_id"
+    name = "Id"
     type = "S"
   }
 
@@ -59,11 +59,26 @@ resource "aws_dynamodb_table" "mcps_monitoring_table" {
   name           = "mcps_monitoring_${var.infra_environment}"
   billing_mode   = "PAY_PER_REQUEST"
 
-  hash_key       = "id"
+  hash_key       = "McpId"
+  range_key      = "Timestamp"
 
   attribute {
-    name = "id"
+    name = "McpId"
     type = "S"
+  }
+
+  attribute {
+    name = "Timestamp"
+    type = "N"
+  }
+
+  ttl {
+    attribute_name = "ExpiresAt"
+    enabled        = true
+  }
+
+  point_in_time_recovery {
+    enabled = true
   }
 
   tags = local.common_tags

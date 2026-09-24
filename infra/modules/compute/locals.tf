@@ -19,5 +19,11 @@ locals {
       method = "GET"
       lambda = aws_lambda_function.hello_world
     }
+
+    mcp_create = {
+      path   = "/mcp/create"
+      method = "POST"
+      lambda = aws_lambda_function.mcp_create_lambda
+    }
   }
 }
