@@ -1,17 +1,20 @@
 import datetime
+import os
 import uuid
 
 class McpService:
     def __init__(self, dynamodb_client):
         self.db_client = dynamodb_client
+        self.mcps_table = os.environ["MCPS_TABLE_NAME"]
+        self.mcps_monitoring_table = os.environ["MCPS_MONITORING_TABLE_NAME"]
 
     def get_all_mcps(self):
-        response = self.db_client.scan(TableName="mcps_table")
+        response = self.db_client.scan(TableName=self.mcps_table)
         return response.get("Items", [])
 
     def get_mcp_by_id(self, mcp_id):
         response = self.db_client.get_item(
-            TableName="mcps_table",
+            TableName=self.mcps_table,
             Key={"Id": {"S": mcp_id}}
         )
         return response.get("Item", None)
@@ -23,7 +26,7 @@ class McpService:
         mcp_data["UpdatedAt"] = datetime.datetime.utcnow().isoformat()
 
         response = self.db_client.put_item(
-            TableName="mcps_table",
+            TableName=self.mcps_table,
             Item={
                 "Id": {"S": mcp_data["Id"]},
                 "Name": {"S": mcp_data["Name"]},
@@ -41,7 +44,7 @@ class McpService:
 
     def log_mcp_monitoring_data(self, mcp_id, monitoring_data):
         response = self.db_client.put_item(
-            TableName="mcps_monitoring_table",
+            TableName=self.mcps_monitoring_table,
             Item={
                 "Id": {"S": monitoring_data["Id"]},
                 "McpId": {"S": mcp_id},

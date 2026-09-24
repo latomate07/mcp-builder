@@ -113,6 +113,8 @@ resource "aws_lambda_function" "mcp_create_lambda" {
   environment {
     variables = {
       MCP_ENVIRONMENT           = var.mcp_environment
+      MCPS_TABLE_NAME           = "mcps_${var.infra_environment}"
+      MCPS_MONITORING_TABLE_NAME = "mcps_monitoring_${var.infra_environment}"
     }
   }
 
@@ -157,6 +159,14 @@ resource "aws_lambda_function" "mcp_read_lambda" {
   runtime       = var.lambda_runtime
   architectures = [var.lambda_architecture]
   code_sha256   = data.archive_file.mcp_read_lambda.output_base64sha256
+
+  environment {
+    variables = {
+      MCP_ENVIRONMENT           = var.mcp_environment
+      MCPS_TABLE_NAME           = "mcps_${var.infra_environment}"
+      MCPS_MONITORING_TABLE_NAME = "mcps_monitoring_${var.infra_environment}"
+    }
+  }
 
   tags = {
     infra_environment = var.infra_environment

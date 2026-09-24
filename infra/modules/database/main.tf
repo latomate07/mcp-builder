@@ -42,7 +42,7 @@ resource "aws_dynamodb_table" "mcps_table" {
 }
 
 resource "aws_dynamodb_table" "mcps_tools_table" {
-  name           = "mcps_${var.infra_environment}"
+  name           = "mcps_tools_${var.infra_environment}"
   billing_mode   = "PAY_PER_REQUEST"
 
   hash_key       = "Id"
