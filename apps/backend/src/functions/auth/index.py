@@ -11,7 +11,7 @@ cognito_idp_provider = CognitoIdentityProvider(
     user_pool_id=os.environ["COGNITO_USER_POOL_ID"],
     client_id=os.environ["COGNITO_APP_CLIENT_ID"],
     client_secret=os.environ.get("COGNITO_APP_CLIENT_SECRET"),
-    auto_confirm_user=True
+    auto_confirm_user=True # TODO: Consider making this configurable via environment variable or parameter
 )
 
 def handler(event, context):
