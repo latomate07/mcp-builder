@@ -7,56 +7,7 @@ Point it at an OpenAPI spec or pick a template, define tools, drop in your secre
 MCP endpoint your agents can call — without hand-writing a server, managing infrastructure, or
 wiring up auth yourself.
 
-> 🚧 **Status: early / pre-alpha.** The dashboard UI runs on mock data today. This is an open-source
-> project, built in the open — expect things to move fast and break. See the
-> [roadmap](#roadmap) below.
-
 ---
-
-## What it does
-
-- **Generate an MCP server from an OpenAPI spec or a template** (Stripe, GitHub, Postgres, Notion,
-  and more) in minutes instead of hand-rolling one.
-- **Define tools** with typed parameters, backed either by an **HTTP call** to your own API or by
-  **sandboxed code** (TypeScript / Python).
-- **Manage secrets** per server, injected securely at call time — never shipped to the client.
-- **Expose a streaming (SSE) endpoint** with bearer tokens / API keys and optional **custom
-  domains**.
-- **Observe everything**: per-request logs, latency, success rate, and active-client breakdown per
-  server.
-- **Iterate fast**: the whole point is going from "I have an API" to "my agent can call it" far
-  faster than writing and deploying an MCP server by hand — hence the name.
-
-## Why open source
-
-MCP Builder is built in the open, the same way Supabase is built on top of Postgres — no
-proprietary black box. You can read exactly how it's deployed, run the whole stack locally against
-a simulated AWS account, and deploy it to your own AWS account when you're ready. See
-[`docs/aws-architecture.md`](docs/aws-architecture.md) for the full infrastructure design.
-
-## Monorepo structure
-
-```
-apps/
-  web/     # Next.js dashboard — the control-plane UI (servers, tools, secrets, logs, settings)
-  api/     # Control-plane API (in progress)
-  infra/   # Deployment tooling — the Lambda-based provisioning pipeline for tenant MCP servers
-packages/
-  mcp-runtime/       # The runtime that turns a tool config into a live MCP server
-  openapi-parser/    # Turns an OpenAPI spec into MCP tool definitions
-terraform/           # Infrastructure as code (see docs/aws-architecture.md)
-docker/              # Runtime container image(s) for deployed MCP servers
-docs/                # Architecture & design docs
-```
-
-## Tech stack
-
-- **Frontend**: Next.js 15, React 19, Tailwind CSS, Radix UI
-- **Backend**: Python (Serverless usage)
-- **Infrastructure**: AWS (Lambda, DynamoDB, S3, SQS, API Gateway, VPC, ECS Fargate, CloudFront),
-  provisioned with Terraform
-- **Local AWS emulation**: [`floci`](https://github.com/floci) — a LocalStack-style emulator, so you
-  can develop and test infrastructure changes without an AWS account or bill
 
 ## Getting started
 

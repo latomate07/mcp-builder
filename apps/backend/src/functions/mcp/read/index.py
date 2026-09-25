@@ -8,10 +8,8 @@ def handler(event, context):
     AWS Lambda handler for MCP read events.
     """
 
-    data = json.loads(event.get("body") or "{}")
-
     try:
-        mcp_id = data.get("mcp_id")
+        mcp_id = (event.get("pathParameters") or {}).get("mcpId")
         if not mcp_id:
             raise ValueError("Missing 'mcp_id' in request body")
 
